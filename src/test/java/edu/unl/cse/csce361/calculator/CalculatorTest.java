@@ -103,8 +103,8 @@ public class CalculatorTest {
 	//checking if integer char length is 20
 	@Test
 	public void charTwenty(){
-		int type = Calculator.NUMBER;
-				;
+		int type = Calculator.OPERAND_TOO_LONG;
+				
 		char[] token = "12345678901234567890".toCharArray();
 		calculator.calculate(type, token);
 		assertEquals(null, calculator.calculate(type, token));
@@ -290,7 +290,6 @@ public class CalculatorTest {
 		;
 		
 	}
-	//Checking for a string input
 	@Test
 	public void enteringString() {
 		
