@@ -290,19 +290,15 @@ public class CalculatorTest {
 		;
 		
 	}
-	//Testing with an char to add
+	//Checking for a string input
 	@Test
 	public void enteringString() {
 		
-		int type = calculator.NUMBER;
+		int type = 'a';
 		char[]token = "a".toCharArray();
 		calculator.calculate(type, token);
-		token = "b".toCharArray();
-		calculator.calculate(type, token);
-		type = '+';
-		calculator.calculate(type, token);
-		String output = "unknown commanda" + "unknown commanda" + "error: stack empty" +"error: stack empty" + lineSeparator;
-		assertEquals(output, calculator.calculate(type, token));
+		
+		assertEquals("unknown commanda", calculator.calculate(type, token));
 		
 	}
 }
