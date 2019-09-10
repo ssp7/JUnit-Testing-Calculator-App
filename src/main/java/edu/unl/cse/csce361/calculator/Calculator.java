@@ -11,7 +11,8 @@ public class Calculator {
     public static final char DONE = 'q';
     public static final char OPERAND_TOO_LONG = '9';
 
-    private static PushbackInputStream stdin = new PushbackInputStream(System.in);
+    private PushbackInputStream stdin;
+
 
     private int stackPointer;
     private double[] stack;
@@ -26,6 +27,7 @@ public class Calculator {
     }
 
     void run() throws IOException {
+        stdin = new PushbackInputStream(System.in);
         int type;
         char[] token = new char[MAXIMUM_TOKEN_LENGTH];
         String message;
@@ -91,7 +93,7 @@ public class Calculator {
                 message = new String(Arrays.copyOfRange(token, 0, MAXIMUM_TOKEN_LENGTH - 1)) + "... is too long";
                 break;
             default:
-                message = "unknown command " + (char)type;
+                  message = "unknown command" + (char)type;
                 break;
         }
         return message;
@@ -147,6 +149,8 @@ public class Calculator {
                 index++;
             }
             if (c == '.') {
+                  
+                   
                 if (index < limit) {
                     token[index] = (char)c;
                 }
@@ -171,6 +175,7 @@ public class Calculator {
             } else {
                 while (c != '\n' && c != DONE) {
                     c = stdin.read();
+                 
                 }
                 token[limit - 1] = '\0';      // leave this here, intentionally, as a vestigial of C strings
                 tokenType = OPERAND_TOO_LONG;
