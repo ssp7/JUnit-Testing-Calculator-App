@@ -7,10 +7,12 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Set;
 
 import javax.sql.rowset.CachedRowSet;
 
@@ -26,7 +28,7 @@ public class CalculatorTest {
 	private ByteArrayOutputStream fakeOut;
 	private String lineSeparator;
 
-	private void setFakeIn(String input) {
+	private static void setFakeIn(String input) {
 		if (input == null) {
 			input = "";
 		}
@@ -106,8 +108,8 @@ public class CalculatorTest {
 		int type = Calculator.OPERAND_TOO_LONG;
 				
 		char[] token = "12345678901234567890".toCharArray();
-		calculator.calculate(type, token);
-		assertEquals(null, calculator.calculate(type, token));
+	
+		assertEquals("1234567890123456789... is too long", calculator.calculate(type, token));
 
 	}
 	//Testing if the function will wait for input until proper command is passed like " 1 1 + = "
@@ -294,10 +296,71 @@ public class CalculatorTest {
 	public void enteringString() {
 		
 		int type = 'a';
-		char[]token = "a".toCharArray();
+		String input = " ";
+		char[]token = input.toCharArray();
 		calculator.calculate(type, token);
 		
 		assertEquals("unknown commanda", calculator.calculate(type, token));
 		
+	}
+	@Test
+	public void checkingNegative() {
+		int type = calculator.NUMBER;
+		char[] token = "-1".toCharArray();
+		calculator.calculate(type, token);
+        token = "1".toCharArray();
+        calculator.calculate(type, token);
+          type = '+';
+		assertEquals("0",calculator.calculate(type, token) );
+	}
+	
+	@Test
+	public void typeSpace(){
+		int type = Calculator.NUMBER;
+		char[] token = "\n".toCharArray();
+		token =  "\n".toCharArray();
+        
+		//calculator.run();
+		setFakeIn(" ");
+		assertEquals("",calculator.calculate(type, token));
+	}
+	
+	@Test 
+	public void mainFucntion() throws IOException {
+  setFakeIn("9 3 - = q");
+	
+		Calculator.main(null);
+		assertEquals("\t6.0" + lineSeparator,fakeOut.toString());
+		
+		
+	}
+	
+	
+	/*
+	 * 
+	 
+	public void CasSpace() throws IOException {
+		
+	   setFakeIn("1 1 1=q");
+		 Calculator.main(null);
+		assertEquals("",fakeOut.toString());
+		
+	}
+	*/
+	@Test(timeout = 1000)
+	public void large() throws IOException {
+		
+	   setFakeIn("1234567898765432345678765432 =q");
+		 calculator.run();
+		assertEquals("",fakeOut.toString());
+		
+	}
+	
+	@Test(timeout = 1000)
+	public void Decimal() throws IOException {
+	setFakeIn("2.9 3.0 + =q");
+    calculator.run();
+   assertEquals("",fakeOut.toString());
+	
 	}
 }
