@@ -12,3 +12,6 @@
 |10|If the functions tries to pop and empty stack then it will respond by printing "error: empty stack"|eg, + = ("error: empty stack")
 |11|The stack is limited to 100 values. If the function attempts to push a value onto a full stack then the function will output “error: stack full” and return null.| entering 1 100 times and when you try to enter 1 one more time it will present the ("error: stack full")
 |12|when the character type is q the whole porgram will terminate|1 1 + = ("2"), q (end)
+|13|Runs the main function in calculator.java in order to run getToken()|9 3 - = ("6.0")
+|14|Using setFakeIn with an arbitrarily large input should throw an error message | 1234567898765432345678765432 =q ("12345678987654323456... too long")
+|15|Using setFakeIn with a decimal in order to reach the case where the input is not an integer | 2.9 3.0 + =q (5.9)
